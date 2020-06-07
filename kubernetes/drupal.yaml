@@ -9,7 +9,6 @@ spec:
   type: NodePort
   ports:
     - port: 80
-      nodePort: 30080
   selector:
     app: drupal
     tier: frontend
@@ -27,7 +26,7 @@ spec:
     requests:
       storage: 10Gi
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: drupal
@@ -36,6 +35,9 @@ metadata:
 spec:
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: drupal  
   template:
     metadata:
       labels:
